@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import { Button, Container, Card } from 'react-bootstrap';
+import { useState } from "react";
+import { useFlashcards } from './contexts/flashcardContext';
+import AddFlashcardModal from './components/AddFlashcardModal';
+import Flashcard from './components/Flashcard';
 import './App.css';
 
 function App() {
+
+const [showAddFlashcardModal, setShowAddFlashcardtModal] = useState(false)
+const { flashcards } = useFlashcards()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container>
+        <h1 className='me-auto'>Simple Flashcard</h1>
+        <Button className='mb-2' onClick={() => setShowAddFlashcardtModal(true)} >Add Flashcard</Button>
+
+        <div className='flashcards'>
+          {flashcards.map(flashcard => {
+            return (<Flashcard flashcard={flashcard}></Flashcard>)
+          })}
+        </div>
+      </Container>
+      <AddFlashcardModal show={showAddFlashcardModal} handelClose={() => setShowAddFlashcardtModal(false)}/>
+    </>
   );
 }
 
